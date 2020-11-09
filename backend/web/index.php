@@ -108,4 +108,23 @@ $config = yii\helpers\ArrayHelper::merge(
  * 
  * interface Configurable
  */
+
+/* Base/Application.php
+function __construct($config = []) {
+    Yii::$app = $this;
+    static::setInstance($this); //放到$loadModules[]中
+
+    $this->state = self::STATE_BEGIN;
+
+    $this->preInit($config); //预初始化： 设置basePath/vendorPath/runtimePath/timezone及别名，setContainer(), 加载核心类 view/log/formatter/i18n/mailer/urlManager/assetManager/security
+
+    $this->registerErrorHandler($config);   //注册错误处理回调
+
+    Component::__construct($config); //初始化配置参数，调用init方法
+}
+ */
+
+//Component.php $config 会通过 Yii::configure($config) 赋值给 Application, 然后调用init()方法
+//Application.php bootstrap(), 初始化components和extensions
+
 (new yii\web\Application($config))->run();
