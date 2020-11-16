@@ -12,18 +12,18 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'api\controllers',
     'components' => [
-        'request' => [
-            // 'csrfParam' => '_csrf-frontend',
-            // 接收json格式输入的数据。如果不配置，尽可以分辨 application/x-www-form-urlencoded 和 multipart/form-data 输入格式
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-            ]
-        ],
+        // 'request' => [
+        //     // 'csrfParam' => '_csrf-frontend',
+        //     // 接收json格式输入的数据。如果不配置，尽可以分辨 application/x-www-form-urlencoded 和 multipart/form-data 输入格式
+        //     'parsers' => [
+        //         'application/json' => 'yii\web\JsonParser',
+        //     ]
+        // ],
         'user' => [
             'identityClass' => 'api\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false,
-            ' loginUrl ' => null,
+            // 'loginUrl ' => null,
             // 'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         // 'session' => [
@@ -44,11 +44,17 @@ return [
         ],
         // rest
         'urlManager' => [
-            'enablePrettyUrl' => true,
+            // 'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
-            'showScriptName' => false,
+            // 'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'user',
+                    'extraPatterns'=>[
+                        'POST login'=>'login',
+                    ],
+                ],
             ],
         ]
     ],

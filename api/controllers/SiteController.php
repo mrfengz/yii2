@@ -1,19 +1,20 @@
 <?php
 namespace api\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
+use api\models\ResendVerificationEmailForm;
+use api\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use api\models\LoginForm;
+use api\models\PasswordResetRequestForm;
+use api\models\ResetPasswordForm;
+use api\models\SignupForm;
+use api\models\ContactForm;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -77,12 +78,39 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+
+    /**
+     * author: august 2020/11/10
+     */
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        // print_r($_POST);die;
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->response->format = Response::FORMAT_JSON;    // 不能直接返回数组，需要设置返回格式
+            return [
+                'access_token' => $model->login(),
+            ];
+            // return $this->goBack();
+        } else {
+            $model->password = '';
+
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Logs in a user.
      *
      * @return mixed
      */
-    public function actionLogin()
+    public function actionLogin2()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -257,5 +285,10 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionTest()
+    {
+        echo 123;
     }
 }

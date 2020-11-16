@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace api\models;
 
 use Yii;
 use yii\base\Model;
@@ -57,6 +57,9 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
+            $accessToken = $this->_user->generateAccessToken();
+            $this->_user->save();
+            return $accessToken;
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         
