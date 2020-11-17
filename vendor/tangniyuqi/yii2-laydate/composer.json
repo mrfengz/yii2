@@ -1,0 +1,26 @@
+{
+    "name": "tangniyuqi/yii2-laydate",
+    "version": "1.0.3",
+    "description": "The laydate widget laydate the Yii framework",
+    "keywords": ["yii2", "widget", "laydate"],
+    "homepage": "https://github.com/tangniyuqi/yii2-laydate",
+    "type": "yii2-widget",
+    "language": "php",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "tangniyuqi",
+            "email": "tangniyuqi@163.com",
+            "homepage": "http://www.noooya.com/"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "tangniyuqi\\laydate\\": ""
+        }
+    }
+}
